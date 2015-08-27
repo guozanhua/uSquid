@@ -49,13 +49,16 @@
     <Compile Include="uSquid\Assets\AssetManager.cs" />
     <Compile Include="uSquid\Assets\IAssetNode.cs" />
     <Compile Include="uSquid\Assets\IDirectoryNode.cs" />
-    <Compile Include="uSquid\Assets\INode.cs" />
-    <Compile Include="uSquid\Editor\AssetCodeGenerator.cs" />
-    <None Include="uSquid\Editor\Style\Header.cs.style" />
+    <Compile Include="uSquid\Editor\AssetTreeBuilder.cs" />
+    <None Include="uSquid\Editor\Resources\Header.cs.style" />
+    <Content Include="uSquid\Editor\Resources\MonoBehaviourMessages.txt" />
+    <Compile Include="uSquid\Editor\CSCodeBuilder.cs" />
+    <Compile Include="uSquid\Editor\uObjectBuilder.cs" />
+    <Compile Include="uSquid\uObject.cs" />
+    <Compile Include="uSquid\uObjectBehaviour.cs" />
     <Compile Include="uSquid\uSquidUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

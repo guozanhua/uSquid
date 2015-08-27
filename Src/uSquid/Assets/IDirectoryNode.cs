@@ -2,10 +2,10 @@
 {
     public interface IDirectoryNode
     {
-        //string Name { get; }
-        //string Path { get; }
-        //Asset[] GetAssets();
-        //IAssetNode[] GetAssetNodes();
-        //IDirectoryNode[] GetDirectories();
+        string Name { get; }
+        string Path { get; }
+        Asset[] GetAssets();
+        IAssetNode[] GetAssetNodes();
+        IDirectoryNode[] GetDirectories();
     }
 }

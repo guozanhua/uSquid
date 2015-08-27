@@ -36,8 +36,13 @@ namespace uSquid
                 return result;
         }
 
+        public static bool IsWhiteSpaceOrEmpty(this string src)
+        {
+            return !src.Any(c => c != ' ' && c != '\n' && c != '\r' && c != '\t');
+        }
+
         static char[] Numbers = "1234567890".ToCharArray();
-        static char[] AllowedClassCharacters = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz_".ToCharArray();
+        static char[] AllowedClassCharacters = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz1234567890_".ToCharArray();
         static string[] CSharpKeyWords = new string[]
         {
             "abstract",

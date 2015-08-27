@@ -2,6 +2,6 @@
 {
     public interface IAssetNode
     {
-        //Asset[] GetAssets();
+        Asset[] GetAssets();
     }
 }
