@@ -2,11 +2,56 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace uSquid
 {
     public static class uSquidUtility
     {
+        public static IEnumerable<Transform> GetChildren(this Transform parent)
+        {
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                yield return parent.GetChild(i);
+            }
+        }
+
+        public static IEnumerable<GameObject> GetChildren(this GameObject parent)
+        {
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                yield return parent.transform.GetChild(i).gameObject;
+            }
+        }
+
+        public static void PerformRecursive(this Transform parent, Action<Transform> operation)
+        {
+            operation(parent);
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                PerformRecursive(parent.GetChild(i), operation);
+            }
+        }
+
+        public static void PerformRecursive(this GameObject parent, Action<GameObject> operation)
+        {
+            operation(parent);
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                PerformRecursive(parent.transform.GetChild(i).gameObject, operation);
+            }
+        }
+
+        public static UnityObject GetUnityObject(this GameObject gameObject)
+        {
+            if (gameObject == null)
+                return null;
+            var unityObjectBehaviour = gameObject.GetComponent<UnityObjectBehaviour>();
+            if (unityObjectBehaviour == null)
+                return null;
+            return unityObjectBehaviour.UnityObject;
+        }
+
         //Replaces backslashes with forward slashes
         public static string CleanPath(string path)
         {
@@ -42,7 +87,7 @@ namespace uSquid
         }
 
         static char[] Numbers = "1234567890".ToCharArray();
-        static char[] AllowedClassCharacters = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvxyz1234567890_".ToCharArray();
+        static char[] AllowedClassCharacters = "ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz1234567890_".ToCharArray();
         static string[] CSharpKeyWords = new string[]
         {
             "abstract",

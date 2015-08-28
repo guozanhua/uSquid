@@ -5,11 +5,11 @@ Awake
 FixedUpdate
 LateUpdate
 OnAnimatorIK, int layerIndex
-OnAnimatorMove, float[] data, int channels
+OnAnimatorMove
 OnApplicationFocus
 OnApplicationPause
 OnApplicationQuit
-OnAudioFilterRead
+OnAudioFilterRead, float[] data, int channels
 OnBecameInvisible
 OnBecameVisible
 OnCollisionEnter, Collision collision

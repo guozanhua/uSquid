@@ -43,6 +43,12 @@
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity 5.1.2\Editor\Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.Networking">
+      <HintPath>C:\Program Files\Unity 5.1.2\Editor\Data\UnityExtensions\Unity\Networking\UnityEngine.Networking.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files\Unity 5.1.2\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="uSquid\Assets\Asset.cs" />
@@ -53,9 +59,10 @@
     <None Include="uSquid\Editor\Resources\Header.cs.style" />
     <Content Include="uSquid\Editor\Resources\MonoBehaviourMessages.txt" />
     <Compile Include="uSquid\Editor\CSCodeBuilder.cs" />
-    <Compile Include="uSquid\Editor\uObjectBuilder.cs" />
-    <Compile Include="uSquid\uObject.cs" />
-    <Compile Include="uSquid\uObjectBehaviour.cs" />
+    <Compile Include="uSquid\Editor\UnityObjectBuilder.cs" />
+    <Compile Include="uSquid\UnityObject\MonoBehaviourMessages.cs" />
+    <Compile Include="uSquid\UnityObject\UnityObject.cs" />
+    <Compile Include="uSquid\UnityObject\UnityObjectBehaviour.cs" />
     <Compile Include="uSquid\uSquidUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using UnityEngine.Audio;
 
 namespace uSquid.Editor
 {
@@ -28,11 +29,32 @@ namespace uSquid.Editor
 
         static Dictionary<string, Type> SupportedFileTypes = new Dictionary<string, Type>()
         {
+            {"anim", typeof(Animation)},
+            {"mixer", typeof(AudioMixer)},
+            {"wav", typeof(AudioSource)},
+            {"mp3", typeof(AudioSource)},
+            {"ogg", typeof(AudioSource)},
+            {"compute", typeof(ComputeShader)},
+            {"flare", typeof(Flare)},
+            {"fontsettings", typeof(Font)},
+            {"ttf", typeof(Font)},
+            {"prefab", typeof(GameObject)},
+            {"guiskin", typeof(GUISkin)},
+            {"giparams", typeof(LightmapParameters)},
+            {"mat", typeof(Material)},
+            {"cs", typeof(MonoScript)},
+            {"js", typeof(MonoScript)},
+            {"physicMaterial", typeof(PhysicMaterial)},
+            {"physicsMaterial2D", typeof(PhysicsMaterial2D)},
+            {"renderTexture", typeof(RenderTexture)},
+            {"shader", typeof(Shader)},
+            {"shadervariants", typeof(ShaderVariantCollection)},
+            {"txt", typeof(TextAsset)},
             {"png", typeof(Texture2D)},
             {"gif", typeof(Texture2D)},
             {"bmp", typeof(Texture2D)},
-            {"wav", typeof(AudioSource)},
-            {"mp3", typeof(AudioSource)},
+            {"jpg", typeof(Texture2D)},
+            {"jpeg", typeof(Texture2D)},
         };
 
         private DirectoryInfo GetDirectoryOrNull(string path)
@@ -129,7 +151,6 @@ namespace uSquid.Editor
             EndBlock();
         }
 
-
         void WriteFileClass(IGrouping<string, FileInfo> group, List<string> assets)
         {
             AppendLine(string.Format("public class {0}Node : IAssetNode", group.Key));
@@ -148,7 +169,7 @@ namespace uSquid.Editor
                     var assetType =  SupportedFileTypes[fileType];
 
                     fileTypes.Add(fileType);
-                    AppendLine(string.Format("public Asset {0} = new Asset<{1}>(\"{2}\", \"{3}\");", fileType, assetType,  fileInfo.Name, uSquidUtility.CleanPath(fileInfo.FullName)));
+                    AppendLine(string.Format("public Asset<{1}> {0} = new Asset<{1}>(\"{2}\", \"{3}\");", fileType, assetType,  fileInfo.Name, uSquidUtility.CleanPath(fileInfo.FullName)));
                 }
 
                 var fileTypesArray = string.Join(", ", fileTypes.ToArray());
