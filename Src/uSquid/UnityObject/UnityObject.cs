@@ -27,6 +27,8 @@ public class UnityObject
 
         _behaviour = sceneObject.GetComponent<UnityObjectBehaviour>() ?? sceneObject.AddComponent<UnityObjectBehaviour>();
         _behaviour.SetUnityObject(this);
+        u.FireAwake();
+        u.FireOnEnable();
     }
 
     public UnityObject()
@@ -83,5 +85,15 @@ public class UnityObject
     public static implicit operator Transform(UnityObject unityObject)
     {
         return unityObject.Transform;
+    }
+
+    //HACKS
+    public GameObject FindChild(string childName)
+    {
+        return GameObject.FindChild(childName);
+    }
+    public T FindChildComponent<T>(string childName) where T : Component
+    {
+        return GameObject.FindChild(childName).GetComponent<T>();
     }
 }

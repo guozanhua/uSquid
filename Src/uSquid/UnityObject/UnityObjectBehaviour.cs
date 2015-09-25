@@ -8,7 +8,7 @@ public class UnityObjectBehaviour : MonoBehaviour
 	}
 	public void Awake()
 	{
-		this.UnityObject.u.FireAwake();
+		//this.UnityObject.u.FireAwake();
 	}
 	public void FixedUpdate()
 	{
@@ -104,7 +104,8 @@ public class UnityObjectBehaviour : MonoBehaviour
 	}
 	public void OnEnable()
 	{
-		this.UnityObject.u.FireOnEnable();
+        if(this.UnityObject != null)
+            this.UnityObject.u.FireOnEnable();
 	}
 	public void OnFailedToConnect(NetworkConnectionError error)
 	{

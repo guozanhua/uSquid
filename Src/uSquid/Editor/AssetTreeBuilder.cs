@@ -17,7 +17,7 @@ namespace uSquid.Editor
         [MenuItem("uSquid/Regenerate " + StaticClassLocalPath)]
         public static void Generate()
         {
-            var assetsDirectory = Application.dataPath;
+            var assetsDirectory = uSquidUtility.CleanPath(Application.dataPath);
 
             Debug.Log(assetsDirectory);
 
@@ -56,6 +56,7 @@ namespace uSquid.Editor
             {"jpg", typeof(Texture2D)},
             {"jpeg", typeof(Texture2D)},
         };
+        private string _assetsDirectory;
 
         private DirectoryInfo GetDirectoryOrNull(string path)
         {
@@ -67,6 +68,7 @@ namespace uSquid.Editor
 
         public void AppendUnityProjectAssets(string staticClassName)
         {
+            _assetsDirectory = uSquidUtility.CleanPath(Application.dataPath) + '/';
             var assetsDir = new DirectoryInfo(Application.dataPath);
             var childDirectories = new Dictionary<DirectoryInfo, string>();
             
@@ -79,7 +81,7 @@ namespace uSquid.Editor
                 childDirectories.Add(streamingDir, uSquidUtility.MakeCodeSafe(resourcesDir.Name).Replace("Assets", ""));
 
             //Style
-            var styleHeader = File.ReadAllLines(string.Format("{0}/uSquid/Editor/Resources/Header.cs.style", Application.dataPath));
+            var styleHeader = File.ReadAllLines(string.Format("{0}/uSquid/Src/uSquid/Editor/Resources/Header.cs.style", Application.dataPath));
             foreach (var line in styleHeader)
             {
                 AppendLine(line.Replace("$CREATED_AT", DateTime.Now.ToString()));
@@ -120,7 +122,7 @@ namespace uSquid.Editor
             BeginBlock();
             {
                 AppendLine(string.Format("public string Name {{ get {{ return \"{0}\"; }} }}", directory.Name));
-                AppendLine(string.Format("public string Path {{ get {{ return \"{0}\"; }} }}", uSquidUtility.CleanPath(directory.FullName)));
+                AppendLine(string.Format("public string Path {{ get {{ return \"{0}\"; }} }}", uSquidUtility.CleanPath(directory.FullName).Replace(_assetsDirectory, "")));
 
                 // File instances
                 foreach (var group in files)
@@ -169,7 +171,7 @@ namespace uSquid.Editor
                     var assetType =  SupportedFileTypes[fileType];
 
                     fileTypes.Add(fileType);
-                    AppendLine(string.Format("public Asset<{1}> {0} = new Asset<{1}>(\"{2}\", \"{3}\");", fileType, assetType,  fileInfo.Name, uSquidUtility.CleanPath(fileInfo.FullName)));
+                    AppendLine(string.Format("public Asset<{1}> {0} = new Asset<{1}>(\"{2}\", \"{3}\");", fileType, assetType, fileInfo.Name, uSquidUtility.CleanPath(fileInfo.FullName).Replace(_assetsDirectory, "")));
                 }
 
                 var fileTypesArray = string.Join(", ", fileTypes.ToArray());

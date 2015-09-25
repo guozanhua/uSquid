@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace uSquid
+namespace UnityEngine
 {
-    public static class uSquidUtility
+    public static class uSquidUnityUtility
     {
         public static IEnumerable<Transform> GetChildren(this Transform parent)
         {
@@ -51,6 +51,35 @@ namespace uSquid
                 return null;
             return unityObjectBehaviour.UnityObject;
         }
+
+        public static GameObject FindChild(this GameObject parent, string childName)
+        {
+            for (int i = 0; i < parent.transform.childCount; i++)
+            {
+                var child = parent.transform.GetChild(i);
+                if (child.name == childName)
+                    return child.gameObject;
+            }
+            return null;
+        }
+
+        public static Transform FindChild(this Transform parent, string childName)
+        {
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                var child = parent.GetChild(i);
+                if (child.gameObject.name == childName)
+                    return child;
+            }
+            return null;
+        }
+    }
+}
+
+namespace uSquid
+{
+    public static class uSquidUtility
+    {
 
         //Replaces backslashes with forward slashes
         public static string CleanPath(string path)

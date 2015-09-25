@@ -25,18 +25,56 @@ namespace uSquid.Assets
 
         public static bool HasLoaded(string assetPath)
         {
-            return assetPath.Contains(assetPath);
+            return _instance._loadedAssets.ContainsKey(assetPath);
         }
 
         public static T Load<T>(string assetPath) where T : UnityEngine.Object
         {
+            Debug.Log("Loading: " + assetPath);
+
             if (HasLoaded(assetPath))
+            {
+                Debug.Log("Aready loaded: " + assetPath);
                 return (T)_instance._loadedAssets[assetPath];
+            }
 
-            var asset = Resources.Load<T>(assetPath);
-            _instance._loadedAssets.Add(assetPath, asset);
+            const string ResourcesPath = "Resources/";
+            const string StreamingPath = "StreamingAssets/";
 
-            return asset;
+            if(typeof(T) == typeof(Shader))
+            {
+                //TODO: Shader.Find
+                throw new NotImplementedException();
+            }
+            else if(assetPath.Length >= ResourcesPath.Length
+                && assetPath.Substring(0, ResourcesPath.Length) == ResourcesPath)
+            {
+                var assetPathInsideResources = assetPath.Substring(ResourcesPath.Length, assetPath.Length - ResourcesPath.Length);
+                
+                //Ignore filetype when using Resoures.Load<T>()
+                var file = assetPath.Split('/').Last();
+                if(file.Contains("."))
+                {
+                    var fileType = '.' + file.Split('.').Last();
+                    assetPathInsideResources = assetPathInsideResources.Substring(0, assetPathInsideResources.Length - fileType.Length);
+                }
+                
+                
+                Debug.Log("From resources: " + assetPathInsideResources);
+                var asset = Resources.Load<T>(assetPathInsideResources);
+                _instance._loadedAssets.Add(assetPath, asset);
+                return asset;
+            }
+            else if (assetPath.Length >= StreamingPath.Length
+                && assetPath.Substring(0, StreamingPath.Length) == StreamingPath)
+            {
+                //TODO: WWW
+                throw new NotImplementedException();
+            }
+            else
+            {
+                throw new Exception("Unknown load method for path " + assetPath);
+            }
         }
 
         public static void Unload(string assetPath, bool immediate = false)
