@@ -81,7 +81,7 @@ namespace uSquid.Editor
                 childDirectories.Add(streamingDir, uSquidUtility.MakeCodeSafe(resourcesDir.Name).Replace("Assets", ""));
 
             //Style
-            var styleHeader = File.ReadAllLines(string.Format("{0}/uSquid/Src/uSquid/Editor/Resources/Header.cs.style", Application.dataPath));
+            var styleHeader = File.ReadAllLines(string.Format("{0}/uSquid/Editor/Resources/Header.cs.style", Application.dataPath));
             foreach (var line in styleHeader)
             {
                 AppendLine(line.Replace("$CREATED_AT", DateTime.Now.ToString()));

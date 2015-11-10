@@ -87,13 +87,13 @@ public class UnityObject
         return unityObject.Transform;
     }
 
-    //HACKS
-    public GameObject FindChild(string childName)
+    public GameObject FindChildAt(string childPath)
     {
-        return GameObject.FindChild(childName);
+        return GameObject.FindChildAt(childPath);
     }
-    public T FindChildComponent<T>(string childName) where T : Component
+
+    public T FindChildAt<T>(string childPath) where T : Component
     {
-        return GameObject.FindChild(childName).GetComponent<T>();
+        return GameObject.FindChildAt(childPath).GetComponent<T>();
     }
 }

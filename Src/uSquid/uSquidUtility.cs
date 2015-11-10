@@ -42,6 +42,24 @@ namespace UnityEngine
             }
         }
 
+        public static void PerformAscending(this Transform parent, Action<Transform> operation)
+        {
+            operation(parent);
+            if (parent.transform.parent != null)
+            {
+                PerformAscending(parent.transform.parent, operation);
+            }
+        }
+
+        public static void PerformAscending(this GameObject parent, Action<GameObject> operation)
+        {
+            operation(parent);
+            if(parent.transform.parent != null)
+            {
+                PerformAscending(parent.transform.parent.gameObject, operation);
+            }
+        }
+
         public static UnityObject GetUnityObject(this GameObject gameObject)
         {
             if (gameObject == null)
@@ -52,18 +70,51 @@ namespace UnityEngine
             return unityObjectBehaviour.UnityObject;
         }
 
-        public static GameObject FindChild(this GameObject parent, string childName)
+        public static T FindChildAt<T>(this GameObject parent, string childPath) where T : Component
         {
-            for (int i = 0; i < parent.transform.childCount; i++)
-            {
-                var child = parent.transform.GetChild(i);
-                if (child.name == childName)
-                    return child.gameObject;
-            }
-            return null;
+            return parent.FindChildAt(childPath).GetComponent<T>();
         }
 
-        public static Transform FindChild(this Transform parent, string childName)
+        public static T FindChildAt<T>(this Transform parent, string childPath) where T : Component
+        {
+            return parent.FindChild(childPath).GetComponent<T>();
+        }
+
+        public static GameObject FindChildAt(this GameObject parent, string childPath)
+        {
+            return parent.transform.FindChild(childPath).gameObject;
+        }
+
+        public static Transform FindChildAt(this Transform parent, string childPath)
+        {
+            if (childPath.Contains('/'))
+            {
+                Transform child = null;
+                var children = childPath.Split('/');
+                foreach (var childName in children)
+                {
+                    child = FindChildUsingName(parent, childName);
+
+                    if(child == null)
+                    {
+                        //Not found
+                        break;
+                    }
+                    else
+                    {
+                        parent = child;
+                    }
+                }
+                return child;
+            }
+            else
+            {
+                return FindChildUsingName(parent, childPath);
+            }
+           
+        }
+
+        static Transform FindChildUsingName(Transform parent, string childName)
         {
             for (int i = 0; i < parent.childCount; i++)
             {
@@ -71,6 +122,8 @@ namespace UnityEngine
                 if (child.gameObject.name == childName)
                     return child;
             }
+
+            Debug.LogWarning(string.Format("Couldn't find child \"{0}\" of parent \"{1}\"", childName, parent.name));
             return null;
         }
     }

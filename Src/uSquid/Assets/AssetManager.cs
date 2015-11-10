@@ -77,6 +77,11 @@ namespace uSquid.Assets
             }
         }
 
+        public static void Clear()
+        {
+            _instance._loadedAssets.Clear();
+        }
+
         public static void Unload(string assetPath, bool immediate = false)
         {
             if (!HasLoaded(assetPath))
