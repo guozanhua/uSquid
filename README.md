@@ -7,9 +7,11 @@ Copy Src\uSquid to your Assets Directory
 
 C# events instead of Unity Messages
 ----------------
-Create a ```new UnityObject``` passing in a target ```GameObject``` and a ```UnityObjectBehaviour``` will be added to it
-``UnityObjectBehaviour``` will fire all of Unity's GameObject Messages as proper C# events under ``UnityObject.u.*```
-This allows you to seperate your logic from Monobehaviours and still have access to critical engine events like ``UnityObject.u.OnTriggerEnter```
+Create a ew UnintyObject passing in a target GameObject (Behind the scenes a `UnityObjectBehaviour will be added to the GameObject)
+
+All of Unity's GameObject Messages will be fired as as proper C# events under ``UnityObject.u.*```
+
+This allows you to seperate your resuable logic from Monobehaviours and still have access to critical engine events like OnTriggerEnter/OnTriggerExit
 ```cs
 static void CreateSineCube()
 {
@@ -64,16 +66,21 @@ Loading assets via strings has some weaknesses, especially at game jams where yo
 Intellisense Assets / No more static strings
 ----------------
 In Unity use the "uSquid/Regenerate MyAssets.cs" menu item
-![RegenerateMyAssets](https://github.com/sleepyparadox/uSquid/blob/master/Img/Examples/EditorRegenerateMyAssets.png)
+![RegenerateMyAssets](https://github.com/sleepyparadox/uSquid/blob/master/Img/Examples/EditorRegenerateMyAssets.png "RegenerateMyAssets")
+
 
 This will generate a MyAssets.cs code file in your assets directory
+
 Including the MyAssets.cs in your project will expose Resources via intellisense
 ```cs
 var page = MyAssets.Resources.UI.GameObjects.RecipePage.prefab.Clone();
 ```
 
+
 Now that assets are exposed via code you can quickly catch missing assets when compiling
-![MissingAsset](https://github.com/sleepyparadox/uSquid/blob/master/Img/Examples/MissingAsset.png)
+
+![MissingAsset](https://github.com/sleepyparadox/uSquid/blob/master/Img/Examples/MissingAsset.png "MissingAsset")
+
 (Generating MyAssets.cs is currently a manual step, allowing you to choose when to resolve asset changes)
 
 Directories expose assets as collections, allowing you to easily preload / unload groups resources
@@ -89,9 +96,14 @@ foreach(var uiIcon in uiIcons)
 
 Unity Updates / Changes to Unity Messages
 ----------------
-Unity Messages definitions are stored in uSquid/Editor/Resources/MonoBehaviourMessages.txt
+Unity Messages definitions are stored in [MonoBehaviourMessages.txt]{https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/Resources/MonoBehaviourMessages.txt}
+
 The formatting for messages is "MessageName, Arg0Type Arg0Name, Arg1Type Arg1Name, Arg2Type Arg2Name"
+
 Update them to match http://docs.unity3d.com/ScriptReference/MonoBehaviour.html
-Uncomment line 13 of UnityObjectBuild.cs ```[MenuItem("uSquid/BehindTheCurtain/Regenerate UnityObject.cs")]```
+
+Uncomment line 13 of [UnityObjectBuild.cs](https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/UnityObjectBuilder.cs#L13) ```[MenuItem("uSquid/BehindTheCurtain/Regenerate UnityObject.cs")]```
+
 This will exposed the "uSquid/BehindTheCurtain/Regenerate UnityObject.cs" menu item in the unity editor
+
 Press "Regenerate UnityObject.cs" to regenerate the generate Unity Message events
