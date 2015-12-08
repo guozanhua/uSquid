@@ -7,7 +7,7 @@ Copy Src\uSquid to your Assets Directory
 
 C# events instead of Unity Messages
 ----------------
-Create a ew UnintyObject passing in a target GameObject (Behind the scenes a `UnityObjectBehaviour will be added to the GameObject)
+Create a new UnityObject passing in a target GameObject (Behind the scenes a `UnityObjectBehaviour will be added to the GameObject)
 
 All of Unity's GameObject Messages will be fired as as proper C# events under ``UnityObject.u.*```
 
@@ -57,9 +57,7 @@ var oldPageInstance = (GameObject)UnityEngine.Object.Instantiate(oldPagePrefab);
 ```
 Loading assets via strings has some weaknesses, especially at game jams where you have 48 hours and your assets and asset layout is constantly evolving
 * Renaming directories can break every asset beneath it
-* Asset my be renamed or have a spelled incorrectly
-	The longer the string the harder it is to catch
-	Capitalisation within the path can also be a pain
+* Asset my be renamed, be spelled incorrectly or inconsistent Capitalisation
 * Need manage loading / unloading of Prefabs
 
 
@@ -80,8 +78,7 @@ var page = MyAssets.Resources.UI.GameObjects.RecipePage.prefab.Clone();
 Now that assets are exposed via code you can quickly catch missing assets when compiling
 
 ![MissingAsset](https://github.com/sleepyparadox/uSquid/blob/master/Img/Examples/MissingAsset.png "MissingAsset")
-
-(Generating MyAssets.cs is currently a manual step, allowing you to choose when to resolve asset changes)
+(Regenerating MyAssets.cs is a manual step, allowing you to choose when to resolve asset changes)
 
 Directories expose assets as collections, allowing you to easily preload / unload groups resources
 ```cs
@@ -94,7 +91,7 @@ foreach(var uiIcon in uiIcons)
 }
 ```
 
-Unity Updates / Changes to Unity Messages
+When Unity Updates and Unity Messages Change
 ----------------
 Unity Messages definitions are stored in [MonoBehaviourMessages.txt]{https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/Resources/MonoBehaviourMessages.txt}
 
