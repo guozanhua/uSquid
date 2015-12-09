@@ -57,7 +57,7 @@ var oldPageInstance = (GameObject)UnityEngine.Object.Instantiate(oldPagePrefab);
 ```
 Loading assets via strings has some weaknesses, especially at game jams where you have 48 hours and your assets and asset layout is constantly evolving
 * Renaming directories can break every asset beneath it
-* Asset my be renamed, be spelled incorrectly or inconsistent Capitalisation
+* Asset may be renamed, be spelled incorrectly or have inconsistent Capitalisation
 * Need manage loading / unloading of Prefabs
 
 
@@ -75,10 +75,14 @@ var page = MyAssets.Resources.UI.GameObjects.RecipePage.prefab.Clone();
 ```
 
 
-Now that assets are exposed via code you can quickly catch missing assets when compiling
+Now that assets are exposed via code,
+
+you can quickly catch missing assets when compiling
+
+(Note regenerating MyAssets.cs is a manual step, allowing you to choose when to resolve asset changes)
 
 ![MissingAsset](https://github.com/sleepyparadox/uSquid/blob/master/Img/Examples/MissingAsset.png "MissingAsset")
-(Regenerating MyAssets.cs is a manual step, allowing you to choose when to resolve asset changes)
+
 
 Directories expose assets as collections, allowing you to easily preload / unload groups resources
 ```cs
@@ -91,15 +95,15 @@ foreach(var uiIcon in uiIcons)
 }
 ```
 
-When Unity Updates and Unity Messages Change
+When Unity Updates or Unity Messages Change
 ----------------
-Unity Messages definitions are stored in [MonoBehaviourMessages.txt]{https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/Resources/MonoBehaviourMessages.txt}
+Unity Messages definitions are stored in [MonoBehaviourMessages.txt](https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/Resources/MonoBehaviourMessages.txt)
 
 The formatting for messages is "MessageName, Arg0Type Arg0Name, Arg1Type Arg1Name, Arg2Type Arg2Name"
 
-Update them to match http://docs.unity3d.com/ScriptReference/MonoBehaviour.html
+Update them to match the latest documentation http://docs.unity3d.com/ScriptReference/MonoBehaviour.html
 
-Uncomment line 13 of [UnityObjectBuild.cs](https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/UnityObjectBuilder.cs#L13) ```[MenuItem("uSquid/BehindTheCurtain/Regenerate UnityObject.cs")]```
+Uncomment line 13 of [UnityObjectBuild.cs](https://github.com/sleepyparadox/uSquid/blob/master/Src/uSquid/Editor/UnityObjectBuilder.cs#L13)
 
 This will exposed the "uSquid/BehindTheCurtain/Regenerate UnityObject.cs" menu item in the unity editor
 
